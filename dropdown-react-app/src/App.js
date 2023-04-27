@@ -1,55 +1,30 @@
-import axios from 'axios';
-import React, { useEffect, useReducer } from 'react';
-const initialState ={
-    loading : true,
-    error : '',
-    post : []
-}
-const reducer = (state, action)=>{
-    switch(action.type){
-        case 'FETCH_SUCCESS' :
-            return{
-                loading : false,
-                error : '',
-                post : action.payload
-            }
-        case 'FETCH_ERROR' :
-            return{
-                loading : false,
-                error : 'Something went wrong',
-                post : []
-            }
+import React, { useState } from "react";
+import './App.css'
+const options = ["Yes", "Probably not"];
 
-        default :
-        return state;
+const Dropdown = () => {
+const [selectedOption, setSelectedOption] = useState("");
 
-    }
+const handleOptionChange = (event) => {
+	setSelectedOption(event.target.value);
+};
 
-}
-function App(props) {
-    const [state, dispatch] = useReducer(reducer, initialState);
-	const posts = state
-    useEffect(()=>{
-    
-        axios.get(`https://jsonplaceholder.typicode.com/posts`)
-        .then(res=>{
-    
-			console.log(res.data)
-            dispatch({type : 'FETCH_SUCCESS', payload : res.data})
-            
-        })
-        .catch(err=>{
-            dispatch({type : 'FETCH_ERROR'})
-        })
-       },[])
-    return (
-        <div>
-            <div>{state.loading ? 'Loading..' : posts.map(post=>(<li>
-				
-			</li>))}</div>
-            <h1>{state.error ? state.error : null}</h1>
-        </div>
-    );
-}
+	return (
+		<div className="App" style={{border: "1px solid #ccc", borderRadius: "5px", padding: "10px" }}>
+			<label htmlFor="dropdown">Should you use dropdown?</label>
+				<select id="dropdown" value={selectedOption} onChange={handleOptionChange} style={{ margin: "10px" }}>
+					<option value="">Select</option>
+					{options.map((option) => (
+						<option key={option} value={option}>
+							{option}
+					</option>
+				))}
+				</select>
+			{selectedOption && (
+				<p style={{ marginTop: "10px" }}>You selected: {selectedOption}</p>
+			)}
+		</div>
+	);
+};
 
-export default App;
+export default Dropdown;
