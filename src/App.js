@@ -1,30 +1,40 @@
-import React, { useState } from "react";
+import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { Dropdown, Space } from 'antd';
 import './App.css'
-const options = ["Yes", "Probably not"];
-
-const Dropdown = () => {
-const [selectedOption, setSelectedOption] = useState("");
-
-const handleOptionChange = (event) => {
-	setSelectedOption(event.target.value);
-};
-
-	return (
-		<div className="App" style={{border: "1px solid #ccc", borderRadius: "5px", padding: "10px" }}>
-			<label htmlFor="dropdown">Should you use dropdown?</label>
-				<select id="dropdown" value={selectedOption} onChange={handleOptionChange} style={{ margin: "10px" }}>
-					<option value="">Select</option>
-					{options.map((option) => (
-						<option key={option} value={option}>
-							{option}
-					</option>
-				))}
-				</select>
-			{selectedOption && (
-				<p style={{ marginTop: "10px" }}>You selected: {selectedOption}</p>
-			)}
-		</div>
-	);
-};
-
-export default Dropdown;
+const items = [
+  {
+    key: '1',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="">
+       Yes
+      </a>
+    ),
+    icon: <SmileOutlined />,
+  },
+  {
+    key: '2',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="">
+        Probably Not
+      </a>
+    ),
+    
+    disabled: false,
+  },
+ 
+];
+const App = () => (
+  <Dropdown className='dropdown'
+    menu={{
+      items,
+    }}
+  >
+    <a onClick={(e) => e.preventDefault()}>
+      <Space>
+      Should you use the dropdown?
+        <DownOutlined />
+      </Space>
+    </a>
+  </Dropdown>
+);
+export default App;
